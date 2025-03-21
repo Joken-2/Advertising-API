@@ -1,27 +1,28 @@
 import { model, Schema } from "mongoose";
+import normalize from 'normalize-mongoose';
 
-const UserSchema = new Schema({
-    firstName:{
+const userSchema = new Schema({
+    firstName: {
         type: String,
         required: true,
         unique: true,
     },
-    lastName:{
+    lastName: {
         type: String,
         required: true,
         unique: true,
     },
-    gender:{
+    gender: {
         type: String,
         required: true,
         unique: true,
     },
-    email:{
+    email: {
         type: String,
         required: true,
         unique: true,
     },
-    password:{
+    password: {
         type: String,
         required: true
     },
@@ -31,7 +32,9 @@ const UserSchema = new Schema({
         enum: ['user', 'vendor', 'manager', 'admin']
     }
 }, {
-    timestamps:true,
+    timestamps: true,
 });
 
-export const UserModel = model ('User', UserSchema);
+userSchema.plugin(normalize);
+
+export const UserModel = model('User', userSchema);

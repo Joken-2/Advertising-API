@@ -1,29 +1,29 @@
-import {UserModel} from "../models/user.js";
+import { UserModel } from "../models/user.js";
 
-export const addNewUser = async(req, res, next) => {
+export const addNewUser = async (req, res, next) => {
     const result = await UserModel.create({
         ...value
     });
-    res.status(201),json('user added successfully!');
+    res.status(201), json(result);
 }
 
-export const loginUser = async(req, res, next) => {
+export const loginUser = async (req, res, next) => {
     const user = await UserModel.findOne({
         $or: [
-            {username: value.username},
-            {email: value.email}
+            { username: value.username },
+            { email: value.email }
         ]
     });
-    if(!user){
+    if (!user) {
         return res.status(409).json('user does not exist!')
     }
 }
 
-export const updateUser = async(req, res, next) => {
+export const updateUser = async (req, res, next) => {
     const user = await UserModel.findByIdAndUpdate(
         req.params.id,
         value,
-        {new: true}
+        { new: true }
     );
     res.status(200).json('user updated successfully!')
 }
