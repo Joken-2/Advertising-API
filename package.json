@@ -1,18 +1,34 @@
 {
 
   "name": "advertising-api",
+
   "version": "1.0.0",
+
   "main": "index.js",
+
   "type": "module",
- "scripts": {
+
+  "scripts": {
+
     "test": "echo \"Error: no test specified\" && exit 1",
+
     "dev": "nodemon index.js",
+
     "start": "node ."
+
   },
+
   "dependencies": {
+
     "express": "^4.21.2",
+
     "mongoose": "^8.12.1",
-    "nodemon": "^3.1.9"
+
+    "nodemon": "^3.1.9",
+
+    "normalize-mongoose": "^1.0.0"
+
   }
-  
+
 }
+

@@ -1,24 +1,25 @@
 import { model, Schema, Types } from "mongoose";
+import normalize from 'normalize-mongoose';
 
-const ProductSchema = new Schema({
+const productSchema = new Schema({
     userId: {
         type: Types.ObjectId,
         ref: 'User',
         required: true,
     },
-    name:{
+    name: {
         type: String,
         required: true
     },
-    price:{
+    price: {
         type: Number,
         required: true
     },
-    description:{
+    description: {
         type: String,
         required: true,
     },
-    quantity:{
+    quantity: {
         type: Number,
         required: true,
     },
@@ -27,7 +28,9 @@ const ProductSchema = new Schema({
         required: true
     }
 }, {
-    timestamps:true,
+    timestamps: true,
 });
 
-export const ProductModel = model ('product', ProductSchema);
+productSchema.plugin(normalize);
+
+export const ProductModel = model('product', productSchema);
