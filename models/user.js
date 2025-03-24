@@ -1,26 +1,28 @@
 import { model, Schema } from "mongoose";
 import normalize from 'normalize-mongoose';
 
-const userSchema = new Schema({
+const userSignupSchema = new Schema({
     firstName: {
         type: String,
         required: true,
-        unique: true,
+        
     },
     lastName: {
         type: String,
         required: true,
-        unique: true,
+        
+    },
+    userName: {
+        type: String
     },
     gender: {
         type: String,
-        required: true,
-        unique: true,
+        required: true
     },
     email: {
         type: String,
         required: true,
-        unique: true,
+        unique: true
     },
     password: {
         type: String,
@@ -35,6 +37,21 @@ const userSchema = new Schema({
     timestamps: true,
 });
 
-userSchema.plugin(normalize);
+const userLoginSchema = new Schema({
+    email: {
+        type: String,
+        required: true,
+    },
+    password: {
+        type: String,
+        required: true,
+    }
+}, {
+    timestamps: true,
+});
 
-export const UserModel = model('User', userSchema);
+userSignupSchema.plugin(normalize);
+userLoginSchema.plugin(normalize);
+
+export const UserModel = model('User', userSignupSchema);
+// export const UserLoginModel = model('User', userLoginSchema);
