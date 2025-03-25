@@ -16,7 +16,7 @@ const advertRouter = Router();
 advertRouter.post(
   "/advert",
   isAuthenticated,
-  isAuthorized(["admin", "vendor"]),
+  isAuthorized(["vendor"]),
   advertPicturesUpload.array("pictures", 4),
   addProduct
 );
