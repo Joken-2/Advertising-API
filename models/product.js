@@ -7,7 +7,7 @@ const productSchema = new Schema({
         ref: 'User',
         required: true,
     },
-    name: {
+    title: {
         type: String,
         required: true
     },
@@ -19,11 +19,11 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
-    quantity: {
-        type: Number,
+    category: {
+        type: String,
         required: true,
     },
-    images: {
+    media: {
         type: String,
         required: true
     }

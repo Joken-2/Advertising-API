@@ -1,8 +1,9 @@
-import { UserModel } from "../models/user.js";
-import nodemon from "nodemon";
-import bcrypt from "bcrypt"
-import jwt from "jsonwebtoken"
+import {  UserModel } from "../models/user.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import { loginUserValidator, registerUserValidator, updateUserValidator } from "../validators/user.js";
+import { mailTransporter, registerUserMailTemplate } from "../utils/mailing.js";
+
 
 export const addNewUser = async (req, res, next) => {
 //  Validate User Info
@@ -16,7 +17,7 @@ const { error, value } = registerUserValidator.validate(req.body);
     $or: [{ email: value.email }, {lastName: value.lastName}]
   });
   if (user) {
-    return res.status(200).json('User already exists!')
+    return res.status(409).json('User already exists!')
 }
   // hash plaintext password
   const hashedPassword = bcrypt.hashSync(value.password, 10);
@@ -24,6 +25,14 @@ const { error, value } = registerUserValidator.validate(req.body);
     const result = await UserModel.create({
         ...value,
         password: hashedPassword,
+    });
+
+    // Send registration email to user
+    await mailTransporter.sendMail({
+        from: process.env.USER_EMAIL,
+        to: value.email,
+        subject: "Testing Mail",
+        html: registerUserMailTemplate.replace('{{userName}}', value.userName),
     });
     res.status(201).json("User registered successfully!");
 }
@@ -34,16 +43,18 @@ export const loginUser = async (req, res, next) => {
     if (error) {
         return res.status(422).json(error);
     }
-    //find matching user record in database
+    // find matching user record in database
     const user = await UserModel.findOne({
         $or: [
-            { username: value.username },
+            { userName: value.userName },
             { email: value.email }
+
         ]
     });
     if (!user) {
-        return res.status(409).json('User does not exist!' )
-    }
+        return res.status(401).json("Invalid credentials!");
+    };
+
 
     // compare incoming password with saved password 
     const correctPassword = bcrypt.compareSync(value.password, user.password);
@@ -56,7 +67,13 @@ export const loginUser = async (req, res, next) => {
         expiresIn: "12h", 
     });
     // return response
-    res.status(200).json({accessToken});
+    res.status(200).json({
+        accessToken,
+        user: {
+            role: user.role,
+            email: user.email
+        }
+    });
 }
 
 export const updateUser = async (req, res, next) => {
