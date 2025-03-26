@@ -2,12 +2,13 @@ import { Router } from "express";
 import {
   addProduct,
   deleteProduct,
+  getProduct,
   getProducts,
   replaceProduct,
   updatedProduct,
 } from "../controllers/product.js";
 import { isAuthenticated, isAuthorized } from "../middlewares/auth.js";
-import { advertPicturesUpload } from "../middlewares/upload.js";
+import { advertMediaUpload } from "../middlewares/upload.js";
 
 // Creating the Router
 const advertRouter = Router();
@@ -17,18 +18,25 @@ advertRouter.post(
   "/advert",
   isAuthenticated,
   isAuthorized(["vendor"]),
-  advertPicturesUpload.array("pictures", 4),
+  advertMediaUpload.array("media", 4),
   addProduct
 );
 
+advertRouter.get("/advert/:id", getProduct);
+
 advertRouter.get("/advert", getProducts);
 
-advertRouter.patch("/advert/:id", isAuthenticated, updatedProduct);
+advertRouter.patch(
+  "/advert/:id",
+  isAuthenticated,
+  isAuthorized(["vendor"]),
+  updatedProduct
+);
 
 advertRouter.put(
   "/advert/:id",
   isAuthenticated,
-  advertPicturesUpload.array("pictures", 4),
+  advertMediaUpload.array("media", 4),
   replaceProduct
 );
 

@@ -93,3 +93,18 @@ export const updateUser = async (req, res, next) => {
     // return response
     res.status(200).json('user updated successfully!')
 }
+
+export const getAuthenticatorUser = async (req, res, next) => {
+    try {
+        // Get user by id using req.auth.id
+        const result = await UserModel.findById(req.auth.id).select({
+            password:false,
+        });
+    
+        // Return response
+        res.status(200).json(result);
+    } catch (error) {
+        next(error);
+    }
+    
+};

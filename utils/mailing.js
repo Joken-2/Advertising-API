@@ -10,15 +10,6 @@ export const mailTransporter = createTransport({
   },
 });
 
-// export const mailTransporter = createTransport({
-//     host: "smtp.gmail.com",
-//     port: 587,
-//     secure: false,
-//     auth: {
-//         user: 'zongbilkennedy039@gmail.com',
-//         pass: 'jjwu cbat hfmj cbbg'
-//     }
-// });
 
 export const registerUserMailTemplate = `
 <div>
