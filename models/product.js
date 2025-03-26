@@ -24,7 +24,7 @@ const productSchema = new Schema({
         required: true,
     },
     media: {
-        type: String,
+        type: [String],
         required: true
     }
 }, {

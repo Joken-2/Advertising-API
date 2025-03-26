@@ -1,5 +1,5 @@
 import multer from "multer";
-import { multerSaveFilesOrg } from "multer-savefilesorg";
+// import { multerSaveFilesOrg } from "multer-savefilesorg";
 import {v2 as cloudinary} from "cloudinary"
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 
@@ -10,26 +10,26 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_SECRET_KEY
 });
 
-export const remoteUpload = multer({
-  storage: multerSaveFilesOrg({
-    apiAccessToken: process.env.SAVEFILESORG_API_KEY,
-    relativePath: "/advertising-api/*",
-  }),
-});
+// export const remoteUpload = multer({
+//   storage: multerSaveFilesOrg({
+//     apiAccessToken: process.env.SAVEFILESORG_API_KEY,
+//     relativePath: "/advertising-api/*",
+//   }),
+// });
 
-export const advertImageUpload = multer({
-  storage: multerSaveFilesOrg({
-    apiAccessToken: process.env.SAVEFILESORG_API_KEY,
-    relativePath: "/advertising-api/advert-images/*",
-  }),
-});
+// export const advertImageUpload = multer({
+//   storage: multerSaveFilesOrg({
+//     apiAccessToken: process.env.SAVEFILESORG_API_KEY,
+//     relativePath: "/advertising-api/advert-images/*",
+//   }),
+// });
 
-export const advertPicturesUpload = multer({
-  storage: multerSaveFilesOrg({
-    apiAccessToken: process.env.SAVEFILESORG_API_KEY,
-    relativePath: "/advertising-api/advert-pictures/*",
-  }),
-});
+// export const advertPicturesUpload = multer({
+//   storage: multerSaveFilesOrg({
+//     apiAccessToken: process.env.SAVEFILESORG_API_KEY,
+//     relativePath: "/advertising-api/advert-pictures/*",
+//   }),
+// });
 
 export const advertMediaUpload = multer({
   storage: new CloudinaryStorage({

@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { addNewUser, loginUser, updateUser } from "../controllers/users.js";
+import { addNewUser, getAuthenticatorUser, loginUser, updateUser } from "../controllers/users.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 
 //Create an Ad router
 
@@ -11,6 +12,8 @@ userRouter.post("/users/register", addNewUser);
 userRouter.post("/users/login", loginUser);
 
 userRouter.patch("/users/:id", updateUser);
+
+userRouter.get("/users/me", isAuthenticated, getAuthenticatorUser);
 
 // export the router
 
