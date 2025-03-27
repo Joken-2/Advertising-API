@@ -9,6 +9,7 @@ export const registerUserValidator = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     confirmPassword: Joi.ref('password'),
+    role: Joi.string().valid("customer", "vendor").required().default("customer"),
 }).with("password", "confirmPassword");
 
 export const loginUserValidator = Joi.object({
