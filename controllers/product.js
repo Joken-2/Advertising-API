@@ -22,7 +22,7 @@ export const addProduct = async (req, res, next) => {
     // Save product information in the Database
     const result = await ProductModel.create({
       ...value,
-      userId: req.auth.id,
+      userId: req.user.id,
     });
 
     // return response
@@ -88,7 +88,7 @@ export const replaceProduct = async (req, res, next) => {
     // add the UserId from the req.auth to the req.body
     const result = await ProductModel.findOneAndReplace(
       { _id: req.params.id },
-      { ...req.body, userId: req.auth.id },
+      { ...req.body, userId: req.user.id },
 
       { new: true, runValidators: true }
     );

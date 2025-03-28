@@ -9,6 +9,7 @@ import {
 } from "../controllers/product.js";
 import { isAuthenticated, isAuthorized } from "../middlewares/auth.js";
 import { advertMediaUpload } from "../middlewares/upload.js";
+import { checkVendorProductOwnership } from "../controllers/auth_controllers.js";
 
 // Creating the Router
 const advertRouter = Router();
@@ -30,17 +31,26 @@ advertRouter.patch(
   "/advert/:id",
   isAuthenticated,
   isAuthorized(["vendor"]),
+  checkVendorProductOwnership,
   updatedProduct
 );
 
 advertRouter.put(
   "/advert/:id",
   isAuthenticated,
+  isAuthorized(["vendor"]),
+  checkVendorProductOwnership,
   advertMediaUpload.array("media", 4),
   replaceProduct
 );
 
-advertRouter.delete("/advert/:id", isAuthenticated, deleteProduct);
+advertRouter.delete(
+  "/advert/:id",
+  isAuthenticated,
+  isAuthorized(["vendor"]),
+  checkVendorProductOwnership,
+  deleteProduct
+);
 
 // Exporting the Router
 export default advertRouter;
