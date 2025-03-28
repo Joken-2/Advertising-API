@@ -3,6 +3,7 @@ import "dotenv/config";
 import mongoose from "mongoose";
 import advertRouter from "./routes/product.js";
 import userRouter from "./routes/user.js";
+import cors from "cors"
 
 
 const connectionString = process.env.MONGO_URL
@@ -13,6 +14,8 @@ await mongoose
 });
 
 const app = express();
+
+app.use(cors());
 
 app.use(express.json());
 app.use(userRouter);
